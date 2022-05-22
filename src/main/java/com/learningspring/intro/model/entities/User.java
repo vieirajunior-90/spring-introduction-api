@@ -1,30 +1,42 @@
 package com.learningspring.intro.model.entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 
-@Data
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @EqualsAndHashCode.Include
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NonNull
+    @Column(name = "name", nullable = false)
     private String name;
+
     @NonNull
+    @Column(name ="email", nullable = false)
     private String email;
+
     @NonNull
+    @Column(name ="phone", nullable = false)
     private String phone;
+
     @NonNull
+    @Column(name ="password", nullable = false)
     private String password;
+
 }
