@@ -34,10 +34,10 @@ build/
 ### Java template
 # Compiled class file
 *.class
-*.java
 
 # Log file
 *.log
+Action.java
 
 # BlueJ files
 *.ctxt
