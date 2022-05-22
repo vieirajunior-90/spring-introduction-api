@@ -1,5 +1,6 @@
 package com.learningspring.intro.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,10 +48,11 @@ public class User implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonIgnore
     @ToString.Exclude
     private List<Order> orders = new ArrayList<>();
 
-    public void setOrders(@NonNull List<Order> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 
