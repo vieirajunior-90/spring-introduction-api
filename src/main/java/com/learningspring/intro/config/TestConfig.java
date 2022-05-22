@@ -1,8 +1,10 @@
 package com.learningspring.intro.config;
 
+import com.learningspring.intro.model.entities.Category;
 import com.learningspring.intro.model.entities.Order;
 import com.learningspring.intro.model.entities.User;
 import com.learningspring.intro.model.entities.enums.OrderStatus;
+import com.learningspring.intro.repositories.CategoryRepository;
 import com.learningspring.intro.repositories.OrderRepository;
 import com.learningspring.intro.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -80,9 +85,19 @@ public class TestConfig implements CommandLineRunner {
                 OrderStatus.SHIPPED,
                 U5);
 
+        Category C1 = new Category(
+                "Eletronics");
+
+        Category C2 = new Category(
+                "Books");
+
+        Category C3 = new Category(
+                "Computers");
+
 
         userRepository.saveAll(Arrays.asList(U1, U2, U3, U4, U5));
         orderRepository.saveAll(Arrays.asList(O1, O2, O3, O4, O5));
+        categoryRepository.saveAll(Arrays.asList(C1, C2, C3));
 
     }
 }
