@@ -2,6 +2,7 @@ package com.learningspring.intro.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.learningspring.intro.model.entities.enums.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,10 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     @Column(name = "moment", nullable = false)
     private Instant moment;
+
+    @NonNull
+    @Column(name = "status", nullable = false)
+    private OrderStatus status;
 
     @NonNull
     @ManyToOne

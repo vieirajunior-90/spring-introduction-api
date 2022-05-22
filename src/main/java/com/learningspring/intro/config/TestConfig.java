@@ -2,6 +2,7 @@ package com.learningspring.intro.config;
 
 import com.learningspring.intro.model.entities.Order;
 import com.learningspring.intro.model.entities.User;
+import com.learningspring.intro.model.entities.enums.OrderStatus;
 import com.learningspring.intro.repositories.OrderRepository;
 import com.learningspring.intro.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,19 +57,32 @@ public class TestConfig implements CommandLineRunner {
 
         Order O1 = new Order(
                 Instant.parse("2022-06-20T19:53:07Z"),
+                OrderStatus.PAID,
                 U1);
 
         Order O2 = new Order(
                 Instant.parse("2022-07-20T15:21:00Z"),
+                OrderStatus.WAITING_PAYMENT,
                 U2);
 
         Order O3 = new Order(
                 Instant.parse("2022-08-20T12:00:00Z"),
+                OrderStatus.WAITING_PAYMENT,
                 U1);
+
+        Order O4 = new Order(
+                Instant.parse("2022-08-12T10:04:05Z"),
+                OrderStatus.CANCELED,
+                U3);
+
+        Order O5 = new Order(
+                Instant.parse("2022-08-12T20:13:15Z"),
+                OrderStatus.SHIPPED,
+                U5);
 
 
         userRepository.saveAll(Arrays.asList(U1, U2, U3, U4, U5));
-        orderRepository.saveAll(Arrays.asList(O1, O2, O3));
+        orderRepository.saveAll(Arrays.asList(O1, O2, O3, O4, O5));
 
     }
 }
