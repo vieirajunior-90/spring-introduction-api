@@ -1,23 +1,32 @@
 package com.learningspring.intro.controller;
 
 import com.learningspring.intro.model.entities.User;
+import com.learningspring.intro.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
-    public ResponseEntity<User> findAll() {
-        User user = new User();
-        user.setId(1L);
-        user.setName("John Doe");
-        user.setPhone("(21) 99999-9999");
-        user.setEmail("johndoe@yahoo.com.br");
-        user.setPassword("123456");
+    public ResponseEntity<List<User>> findAll() {
+        List<User> users = userService.findAll();
+        return ResponseEntity.ok().body(users);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> findById(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
         return ResponseEntity.ok().body(user);
     }
 }
