@@ -1,7 +1,9 @@
 package com.learningspring.intro.config;
 
+import com.learningspring.intro.model.entities.Order;
 import com.learningspring.intro.model.entities.User;
 import com.learningspring.intro.repositories.UserRepository;
+import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,7 @@ public class TestConfig implements CommandLineRunner {
                 "pedrocarvalho@gmail.com",
                 "(21)98732-1234",
                 "123456");
+
 
         User U2 = new User(
                 "Maria Silva",
@@ -49,6 +52,6 @@ public class TestConfig implements CommandLineRunner {
                 "987634");
 
 
-        userRepository.saveAll(Arrays.asList(U1, U2));
+        userRepository.saveAll(Arrays.asList(U1, U2, U3, U4, U5));
     }
 }

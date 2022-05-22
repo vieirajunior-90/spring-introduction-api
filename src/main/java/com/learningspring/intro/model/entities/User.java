@@ -5,9 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "tb_user")
 @Getter
 @Setter
 @ToString
@@ -38,5 +40,18 @@ public class User implements Serializable {
     @NonNull
     @Column(name ="password", nullable = false)
     private String password;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @ToString.Exclude
+    private List<Order> orders = new ArrayList<>();
+
+    public void setOrders(@NonNull List<Order> orders) {
+        this.orders = orders;
+    }
 
 }
