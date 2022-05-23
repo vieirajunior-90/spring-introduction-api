@@ -1,11 +1,14 @@
 package com.learningspring.intro.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -26,6 +29,12 @@ public class Category implements Serializable {
     @NonNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Setter(AccessLevel.NONE)
+    @NonNull
+    @Transient
+    private Set<Product> products = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,30 +1,28 @@
 package com.learningspring.intro.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "tb_product")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class Product implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @NonNull
@@ -32,33 +30,28 @@ public class User implements Serializable {
     private String name;
 
     @NonNull
-    @Column(name ="email", nullable = false)
-    private String email;
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @NonNull
-    @Column(name ="phone", nullable = false)
-    private String phone;
+    @Column(name = "price", nullable = false)
+    private Double price;
 
     @NonNull
-    @Column(name ="password", nullable = false)
-    private String password;
+    @Column(name = "imageUrl", nullable = false)
+    private String imageUrl;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(
-            mappedBy = "client",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JsonIgnore
-    @ToString.Exclude
-    private List<Order> orders = new ArrayList<>();
+    @ManyToOne
+    @Transient
+    private Set<Category> categories = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return getId().equals(user.getId());
+        Product product = (Product) o;
+        return getId().equals(product.getId());
     }
 
     @Override
