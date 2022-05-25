@@ -56,6 +56,14 @@ public class Order implements Serializable {
     @JsonIgnore
     private Payment payment;
 
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem item : items) {
+            sum += item.getSubTotal();
+        }
+        return sum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
