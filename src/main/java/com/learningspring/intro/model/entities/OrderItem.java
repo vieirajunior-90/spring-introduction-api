@@ -1,6 +1,7 @@
 package com.learningspring.intro.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.learningspring.intro.model.entities.pk.OrderItemPK;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -22,9 +23,9 @@ public class OrderItem implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @EmbeddedId
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private OrderItemPK id = new OrderItemPK();
 
     @NonNull
@@ -40,19 +41,17 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+
     @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
-
     public void setOrder(Order order) {
         id.setOrder(order);
     }
-
     public Product getProduct() {
         return id.getProduct();
     }
-
     public void setProduct(Product product) {
         id.setProduct(product);
     }

@@ -1,5 +1,6 @@
 package com.learningspring.intro.model.entities.pk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learningspring.intro.model.entities.Order;
 import com.learningspring.intro.model.entities.Product;
 import lombok.Data;

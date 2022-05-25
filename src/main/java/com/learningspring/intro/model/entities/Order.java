@@ -47,8 +47,6 @@ public class Order implements Serializable {
     @ToString.Exclude
     private Set<OrderItem> items = new HashSet<>();
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
