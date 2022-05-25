@@ -32,7 +32,9 @@ public class Category implements Serializable {
 
     @Setter(AccessLevel.NONE)
     @NonNull
-    @Transient
+    @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    @ToString.Exclude
     private Set<Product> products = new HashSet<>();
 
 

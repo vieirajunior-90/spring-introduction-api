@@ -34,7 +34,7 @@ public class TestConfig implements CommandLineRunner {
     private ProductRepository productRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         User U1 = new User(
                 "Pedro Carvalho",
                 "pedrocarvalho@gmail.com",
@@ -117,11 +117,29 @@ public class TestConfig implements CommandLineRunner {
                 1599.99,
                 "https://www.notebookcheck.info/uploads/tx_nbc2/HPPavilion13-b__1__03.jpg");
 
+        Product P4 = new Product(
+                "Lord of the Rings",
+                "Written by J.R.R. Tolkien",
+                19.99,
+                "https://images-na.ssl-images-amazon.com/images/I/71jLBXtWJWL.jpg");
+
+        Product P5 = new Product(
+                "Harry Potter and the Philosopher's Stone",
+                "Written by J.K. Rowling",
+                29.99,
+                "https://images-na.ssl-images-amazon.com/images/I/81ibfYk4qmL.jpg");
+
+        P1.getCategories().add(C1);
+        P2.getCategories().add(C1);
+        P3.getCategories().add(C3);
+        P4.getCategories().add(C2);
+        P5.getCategories().add(C2);
+
 
         userRepository.saveAll(Arrays.asList(U1, U2, U3, U4, U5));
         orderRepository.saveAll(Arrays.asList(O1, O2, O3, O4, O5));
         categoryRepository.saveAll(Arrays.asList(C1, C2, C3));
-        productRepository.saveAll(Arrays.asList(P1, P2, P3));
+        productRepository.saveAll(Arrays.asList(P1, P2, P3, P4, P5));
 
     }
 }
