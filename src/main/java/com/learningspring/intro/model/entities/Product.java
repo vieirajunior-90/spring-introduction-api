@@ -52,18 +52,11 @@ public class Product implements Serializable {
     @ToString.Exclude
     private Set<Category> categories = new HashSet<>();
 
-//    @OneToMany(mappedBy = "id.product")
-//    @ToString.Exclude
-//    private Set<OrderItem> items = new HashSet<>();
-//
-//    @JsonIgnore
-//    public Set<Order> getOrders() {
-//        Set<Order> orders = new HashSet<>();
-//        for (OrderItem item : items) {
-//            orders.add(item.getOrder());
-//        }
-//        return orders;
-//    }
+    @OneToMany(mappedBy = "id.product")
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<OrderItem> items = new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {
