@@ -1,13 +1,14 @@
 package com.learningspring.intro.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learningspring.intro.model.entities.pk.OrderItemPK;
 import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TB_ORDER_ITEM")
@@ -23,9 +24,8 @@ public class OrderItem implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    @EqualsAndHashCode.Include
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     @NonNull
     private Integer quantity;
@@ -40,6 +40,7 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
@@ -56,5 +57,25 @@ public class OrderItem implements Serializable {
         id.setProduct(product);
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OrderItem other = (OrderItem) obj;
+        if (id == null) {
+            return other.id == null;
+        } else return id.equals(other.id);
+    }
 }

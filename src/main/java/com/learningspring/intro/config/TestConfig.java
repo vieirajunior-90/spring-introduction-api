@@ -1,14 +1,8 @@
 package com.learningspring.intro.config;
 
-import com.learningspring.intro.model.entities.Category;
-import com.learningspring.intro.model.entities.Order;
-import com.learningspring.intro.model.entities.Product;
-import com.learningspring.intro.model.entities.User;
+import com.learningspring.intro.model.entities.*;
 import com.learningspring.intro.model.entities.enums.OrderStatus;
-import com.learningspring.intro.repositories.CategoryRepository;
-import com.learningspring.intro.repositories.OrderRepository;
-import com.learningspring.intro.repositories.ProductRepository;
-import com.learningspring.intro.repositories.UserRepository;
+import com.learningspring.intro.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) {
@@ -140,6 +137,13 @@ public class TestConfig implements CommandLineRunner {
         orderRepository.saveAll(Arrays.asList(O1, O2, O3, O4, O5));
         categoryRepository.saveAll(Arrays.asList(C1, C2, C3));
         productRepository.saveAll(Arrays.asList(P1, P2, P3, P4, P5));
+
+        OrderItem OI1 = new OrderItem(O1, P1, 2, P1.getPrice());
+        OrderItem OI2 = new OrderItem(O1, P3, 1, P3.getPrice());
+        OrderItem OI3 = new OrderItem(O2, P3, 2, P3.getPrice());
+        OrderItem OI4 = new OrderItem(O3, P5, 1, P5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(OI1, OI2, OI3, OI4));
 
     }
 }
