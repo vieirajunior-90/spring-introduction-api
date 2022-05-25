@@ -47,6 +47,15 @@ public class Order implements Serializable {
     @ToString.Exclude
     private Set<OrderItem> items = new HashSet<>();
 
+    @OneToOne(
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private Payment payment;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
