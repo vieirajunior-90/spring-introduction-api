@@ -31,12 +31,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") Long id) {
-        Optional<User> user = userService.findById(id);
-        if (!user.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-            return ResponseEntity.status(HttpStatus.OK).body(user.get());
-
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
 
     @PostMapping
@@ -49,10 +44,7 @@ public class UserController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
-        User user = userService.findById(id).orElse(null);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
+        User user = userService.findById(id);
         if (user.getOrders() != null && !user.getOrders().isEmpty()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User has orders. Cannot delete");
         }
@@ -62,11 +54,9 @@ public class UserController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody User user) {
-        Optional<User> userOptional = userService.findById(id);
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-        BeanUtils.copyProperties(user, userOptional.get(), "id");
-        return ResponseEntity.status(HttpStatus.OK).body(userService.save(userOptional.get()));
+        User existingUser = userService.findById(id);
+        BeanUtils.copyProperties(user, existingUser, "id");
+        User updatedUser = userService.save(existingUser);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 }

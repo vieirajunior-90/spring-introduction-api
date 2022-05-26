@@ -2,6 +2,7 @@ package com.learningspring.intro.services;
 
 import com.learningspring.intro.model.entities.User;
 import com.learningspring.intro.repositories.UserRepository;
+import com.learningspring.intro.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     @Transactional
     public User save(User user) {
