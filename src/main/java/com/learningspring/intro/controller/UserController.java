@@ -46,5 +46,16 @@ public class UserController {
         return ResponseEntity.created(location).body(savedUser);
     }
 
-
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        User user = userService.findById(id).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        if (user.getOrders() != null && !user.getOrders().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User has orders. Cannot delete");
+        }
+        userService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
