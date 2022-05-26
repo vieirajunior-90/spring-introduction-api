@@ -3,6 +3,7 @@ package com.learningspring.intro.controller;
 import com.learningspring.intro.model.entities.Order;
 import com.learningspring.intro.model.entities.User;
 import com.learningspring.intro.services.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +58,15 @@ public class UserController {
         }
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody User user) {
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        BeanUtils.copyProperties(user, userOptional.get(), "id");
+        return ResponseEntity.status(HttpStatus.OK).body(userService.save(userOptional.get()));
     }
 }
