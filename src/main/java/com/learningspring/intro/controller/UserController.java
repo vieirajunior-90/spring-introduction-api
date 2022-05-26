@@ -43,13 +43,9 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        User user = userService.findById(id);
-        if (user.getOrders() != null && !user.getOrders().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User has orders. Cannot delete");
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}")
